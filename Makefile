@@ -14,7 +14,7 @@ endif
 
 ELF := clear_cache_Vox.elf
 
-CFLAGS := -Wall -Werror -g -lSceNotification
+CFLAGS := -Wall -Werror -g
 
 all: $(ELF)
 

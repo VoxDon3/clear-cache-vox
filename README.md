@@ -2,12 +2,13 @@
 
 A PS5 payload that cleans the console's WebKit **browser cache**, **cookies**,
 **local storage** and useless **temporary data**. Built with the
-[ps5-payload-sdk (prospero)](https://github.com/ps5-payload-dev/ps5-payload-sdk).
+[ps5-payload-sdk (prospero)](https://github.com/ps5-payload-dev/sdk).
 
 - ✅ x86-64 PS5 payload (same format as `kstuff.elf` / `etaHEN-2.6.elf`)
-- ✅ Deletes cache/cookies/databases/localstorage/tmp under
-  `/document/common/webbrowser` and `/user/system/webkit/webbrowser`
-- ✅ Shows a TV notification when finished (`Vox Clean — PS5 cache & temp data cleared`)
+- ✅ Deletes the per-user WebKit data: `/user/home/<user>/webkit/shell` for all users
+- ✅ TV notifications: one when the cleanup starts and one with the number of
+  removed files/dirs when it finishes
+- ✅ Writes the result to `/data/clear_cache_vox.log` for verification
 - ✅ Works on jailbroken PS5 via the standard ELF loader (port `9021`)
 
 ## Usage
@@ -28,7 +29,7 @@ once the cleanup is done.
 
 Requirements:
 
-- [ps5-payload-sdk](https://github.com/ps5-payload-dev/ps5-payload-sdk)
+- [ps5-payload-sdk](https://github.com/ps5-payload-dev/sdk)
 - LLVM / clang for x86_64 (used through the SDK toolchain)
 
 ```bash
@@ -38,6 +39,16 @@ make PS5_PAYLOAD_SDK=/path/to/ps5-payload-sdk
 Output: `clear_cache_Vox.elf`
 
 ## What it cleans
+
+Main target (per user, like the community-tested
+[ps5-webkit-cache-remover](https://github.com/vladimir-cucu/ps5-webkit-cache-remover)
+and [PS5_Browser_appCache_remove](https://github.com/Storm21CH/PS5_Browser_appCache_remove)):
+
+| Path |
+|------|
+| `/user/home/<user>/webkit/shell` (for every user) — appcache, cookies `*.jar.db`, localstorage, tmp, ... |
+
+Legacy/secondary locations (cleaned as well, contents only):
 
 | Path |
 |------|
